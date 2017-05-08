@@ -20,7 +20,7 @@ class Scoreboard():
         score_dis = str(self.stats.score)
         self.score_image = self.font.render(score_dis, True, 
         self.text_color, self.bg_settings.bg_color)
-        #print(self.stats.score)
+        
         #Display the score at the top right of the screen.
         self.score_rect = self.score_image.get_rect()
         self.score_rect.right = self.screen_rect.right - 20

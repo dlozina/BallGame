@@ -6,7 +6,7 @@ class GameStats():
         self.bg_settings = bg_settings
         self.reset_stats()
         #Start Alien invasion in an active state
-        self.game_active = True
+        self.game_active = False
         
     def reset_stats(self):
         """Initialize statistics that can change during the game"""
