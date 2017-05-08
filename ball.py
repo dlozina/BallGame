@@ -16,7 +16,7 @@ class Ball():
         #Start each new ball at random x-position.
         self.rect.x = random.randint(self.rect.width, 
             (bg_settings.screen_width - self.rect.width))
-        self.rect.y = self.rect.height
+        self.rect.y = self.rect.height + 40
         
         #Store the ball's exact position.
         self.x = float (self.rect.x)

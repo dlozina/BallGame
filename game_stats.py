@@ -17,3 +17,5 @@ class GameStats():
         """Initialize statistics that can change during the game"""
         self.player_left = self.bg_settings.player_limit
         self.score = 0
+        self.level_up = 0
+        self.level = 1

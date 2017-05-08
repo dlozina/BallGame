@@ -16,8 +16,18 @@ class Settings():
     def initialize_dynamic_settings(self):
         """Init settings that change troughout the game."""
         #Plyer settings
-        self.player_speed_factor = 1.5
+        self.player_speed_factor = 1.2
         #Ball settings
-        self.ball_speed_factor = 0.5
+        self.ball_speed_factor = 0.7
         #Scoring
         #Add scoring increment
+        
+        #New level and new speed
+        self.speedup_scale_player = 1.1
+        self.speedup_scale_ball = 1.1
+    
+    def increase_speed(self):
+        """Increase speed settings and alien point values"""
+        self.player_speed_factor *= self.speedup_scale_player
+        self.ball_speed_factor *= self.speedup_scale_ball
+        

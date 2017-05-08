@@ -79,10 +79,16 @@ def check_events(bg_settings, screen, stats, sb, play_button, player, ball):
                 check_play_button(bg_settings, screen, stats, sb, play_button, 
                     player, ball, mouse_x, mouse_y, button_pressed)
 
-def collision_check(player, ball, stats, sb):
+def collision_check(bg_settings, player, ball, stats, sb):
     """Detect colision of player and the ball"""
     if pygame.sprite.collide_rect(player, ball):
         stats.score = stats.score + 1
+        stats.level_up += 1
+        if stats.level_up >= 10:
+            bg_settings.increase_speed()
+            stats.level += 1
+            sb.prep_level()
+            stats.level_up = 0
         sb.prep_score()
         check_high_score(stats, sb) 
         ball.x = random.randint(ball.rect.width, 
@@ -107,12 +113,11 @@ def check_play_button(bg_settings, screen, stats, sb, play_button, player,
         #Reset the scoreboard images
         sb.prep_score()
         sb.prep_high_score()
-        
-        #Create random ball
+        sb.prep_level()
         
         #Center Player
         player.center_player()
-        
+             
 def ball_update(bg_settings, stats, player, ball, sb):
     """
     Create ball movement and detect end of screen and collisions
@@ -122,7 +127,7 @@ def ball_update(bg_settings, stats, player, ball, sb):
         if ball.end_of_screen():
             stats.player_left -= 1
             sleep(0.5)
-        collision_check(player, ball, stats, sb)
+        collision_check(bg_settings, player, ball, stats, sb)
         ball.update()
     
     else: #bg_settings.player_limit <= 0:
@@ -151,7 +156,5 @@ def update_screen(bg_settings, stats, screen, player, ball, sb, play_button):
     if not stats.game_active:
         play_button.draw_button()
         
-    #Double call of the function
-    #collision_check(player, ball, stats)
     #Make the most recently drawn screen visible.
     pygame.display.flip()
