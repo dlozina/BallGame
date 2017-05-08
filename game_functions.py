@@ -114,6 +114,7 @@ def check_play_button(bg_settings, screen, stats, sb, play_button, player,
         sb.prep_score()
         sb.prep_high_score()
         sb.prep_level()
+        sb.prep_players()
         
         #Center Player
         player.center_player()
@@ -126,7 +127,8 @@ def ball_update(bg_settings, stats, player, ball, sb):
     if stats.player_left > 0:
         if ball.end_of_screen():
             stats.player_left -= 1
-            sleep(0.5)
+            sb.prep_players()
+            sleep(0.7)
         collision_check(bg_settings, player, ball, stats, sb)
         ball.update()
     
