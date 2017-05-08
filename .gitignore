@@ -1,0 +1,6 @@
+#Ignore files created by Python
+__pycache__/
+#Ignore images files for games 
+images/
+#Ignore high score change
+highscore.txt
