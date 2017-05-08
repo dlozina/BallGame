@@ -36,5 +36,5 @@ def run_game():
             
         gf.update_screen(bg_settings, stats, screen, player, ball, sb,
             play_button)
-        print(stats.player_left)
+
 run_game()

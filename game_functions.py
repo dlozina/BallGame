@@ -26,7 +26,14 @@ def check_keydown_events(event, bg_settings, screen, stats, sb, play_button,
     #elif event.key == pygame.K_SPACE:
         #fire_bullet(ai_settings, screen, ship, bullets)
     elif event.key == pygame.K_q:
+        filename = 'highscore.txt'
+        with open(filename) as file_object:
+            highscore = file_object.read()
+        if int(highscore) <= stats.score:
+            with open(filename, 'w') as file_object:
+                file_object.write(str(stats.score))
         sys.exit()
+        
     elif event.key == pygame.K_p:
         mouse_x, mouse_y = pygame.mouse.get_pos()
         button_pressed = True
@@ -51,6 +58,12 @@ def check_events(bg_settings, screen, stats, sb, play_button, player, ball):
     """Respond to key press and mouse events"""
     for event in pygame.event.get():
             if event.type == pygame.QUIT:
+                filename = 'highscore.txt'
+                with open(filename) as file_object:
+                    highscore = file_object.read()
+                if int(highscore) <= stats.score:
+                    with open(filename, 'w') as file_object:
+                        file_object.write(str(stats.score))
                 sys.exit()
             
             elif event.type == pygame.KEYDOWN:
@@ -70,7 +83,8 @@ def collision_check(player, ball, stats, sb):
     """Detect colision of player and the ball"""
     if pygame.sprite.collide_rect(player, ball):
         stats.score = stats.score + 1
-        sb.prep_score() 
+        sb.prep_score()
+        check_high_score(stats, sb) 
         ball.x = random.randint(ball.rect.width, 
             (ball.bg_settings.screen_width - ball.rect.width))
         ball.y = ball.rect.height
@@ -92,6 +106,7 @@ def check_play_button(bg_settings, screen, stats, sb, play_button, player,
         
         #Reset the scoreboard images
         sb.prep_score()
+        sb.prep_high_score()
         
         #Create random ball
         
@@ -113,7 +128,13 @@ def ball_update(bg_settings, stats, player, ball, sb):
     else: #bg_settings.player_limit <= 0:
         stats.game_active = False
         pygame.mouse.set_visible(True)
-        
+
+def check_high_score(stats, sb):
+    """Check to see if there is a new high score"""
+    if stats.score > stats.high_score:
+        stats.high_score = stats.score
+        sb.prep_high_score()
+                
 def update_screen(bg_settings, stats, screen, player, ball, sb, play_button):
     """Update images on the screen and flip to the new screen"""
     #Redraw the screen during each pass trough the loop
