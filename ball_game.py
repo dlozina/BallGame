@@ -4,6 +4,7 @@ from settings import Settings
 from game_stats import GameStats
 from player import Player
 from ball import Ball
+from scoreboard import Scoreboard
 import game_functions as gf
 
 def run_game():
@@ -15,6 +16,7 @@ def run_game():
     pygame.display.set_caption("Ball Game")
     #Create an instance to store game statistics.
     stats = GameStats(bg_settings)
+    sb = Scoreboard(bg_settings, screen, stats)
     #Make a player and a random ball
     player = Player(bg_settings, screen)
     ball = Ball(bg_settings, screen)
@@ -27,10 +29,12 @@ def run_game():
         
         if stats.game_active:
             player.update()
-            gf.ball_update(bg_settings, stats, player, ball)
+            gf.ball_update(bg_settings, stats, player, ball, sb)
+            
             
         
-        gf.update_screen(bg_settings, stats, screen, player, ball)
+        gf.update_screen(bg_settings, stats, screen, player, ball, sb)
+        
         
         
 run_game()

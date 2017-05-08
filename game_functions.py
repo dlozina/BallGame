@@ -53,14 +53,17 @@ def check_events(bg_settings, screen, player, ball):
             elif event.type == pygame.KEYUP:
                 check_keyup_events(event, player)
 
-def collision_check(player, ball):
+def collision_check(player, ball, stats, sb):
     """Detect colision of player and the ball"""
     if pygame.sprite.collide_rect(player, ball):
+        stats.score = stats.score + 1
+        sb.prep_score() 
         ball.x = random.randint(ball.rect.width, 
             (ball.bg_settings.screen_width - ball.rect.width))
         ball.y = ball.rect.height
+        
 
-def ball_update(bg_settings, stats, player, ball):
+def ball_update(bg_settings, stats, player, ball, sb):
     """
     Create ball movement and detect end of screen and collisions
     with player
@@ -72,16 +75,22 @@ def ball_update(bg_settings, stats, player, ball):
     elif bg_settings.player_limit <= 0:
         stats.game_active = False
         
-    collision_check(player, ball)
+    collision_check(player, ball, stats, sb)
     ball.update()
                        
-def update_screen(bg_settings, stats, screen, player, ball):
+def update_screen(bg_settings, stats, screen, player, ball, sb):
     """Update images on the screen and flip to the new screen"""
     #Redraw the screen during each pass trough the loop
     screen.fill(bg_settings.bg_color)
+    
     #Redraw player and ball.
     player.blitme()
     ball.blitme()
-    collision_check(player, ball)
+    
+    #Draw score information
+    sb.show_score()
+    
+    #Double call of the function
+    #collision_check(player, ball, stats)
     #Make the most recently drawn screen visible.
     pygame.display.flip()
