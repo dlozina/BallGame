@@ -5,7 +5,7 @@ class GameStats():
         """Initialize statistics"""
         self.bg_settings = bg_settings
         self.reset_stats()
-        #Start Alien invasion in an active state
+        #Start Ball Game in an active state
         self.game_active = False
         #High score should never be reset
         #Load high score from file
